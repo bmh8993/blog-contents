@@ -23,14 +23,23 @@ extra["springCloudGcpVersion"] = "4.7.2"
 extra["springCloudVersion"] = "2022.0.4"
 
 dependencies {
+
+    // spring
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.google.cloud:spring-cloud-gcp-starter-pubsub")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
+
+    // loggin
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
+
+    // gcp
+    implementation("com.google.cloud:spring-cloud-gcp-starter-pubsub")
 }
 
 dependencyManagement {
