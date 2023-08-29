@@ -1,18 +1,17 @@
-package com.example.springevents.sync.publisher
+package com.example.springevents.sync
 
-import com.example.springevents.sync.CustomSpringEvent
-import mu.KotlinLogging
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
+import java.time.OffsetDateTime
 
-private val logger = KotlinLogging.logger {}
+private val logger = mu.KotlinLogging.logger {}
 
 @Component
 class SyncCustomSpringEventPublisher(
     val applicationEventPublisher: ApplicationEventPublisher,
 ) {
     fun publishCustomEvent(message: String) {
-        logger.info("publishing custom event. message: $message")
+        logger.info("publishing message $message // ${Thread.currentThread().name} // ${OffsetDateTime.now()}")
 
         val customSpringEvent = CustomSpringEvent(this, message)
         applicationEventPublisher.publishEvent(customSpringEvent)
