@@ -1,4 +1,4 @@
-package com.example.springevents.sync
+package com.example.springevents.events.sync
 
 import org.springframework.context.ApplicationEvent
 
