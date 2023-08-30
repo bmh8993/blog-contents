@@ -1,7 +1,7 @@
 package com.example.springevents
 
-import com.example.springevents.async.AsyncCustomSpringEventPublisher
-import com.example.springevents.sync.SyncCustomSpringEventPublisher
+import com.example.springevents.events.async.AsyncCustomSpringEventPublisher
+import com.example.springevents.events.sync.SyncCustomSpringEventPublisher
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Service
 

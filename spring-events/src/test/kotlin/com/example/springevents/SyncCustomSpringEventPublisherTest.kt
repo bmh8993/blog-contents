@@ -1,7 +1,7 @@
 package com.example.springevents
 
-import com.example.springevents.sync.SyncCustomSpringEventListener
-import com.example.springevents.sync.SyncCustomSpringEventPublisher
+import com.example.springevents.events.sync.SyncCustomSpringEventListener
+import com.example.springevents.events.sync.SyncCustomSpringEventPublisher
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

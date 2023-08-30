@@ -1,4 +1,4 @@
-package com.example.springevents.sync
+package com.example.springevents.events.sync
 
 import mu.KotlinLogging
 import org.springframework.context.ApplicationListener
