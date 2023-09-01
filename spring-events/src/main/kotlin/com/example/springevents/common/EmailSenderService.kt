@@ -1,4 +1,4 @@
-package com.example.springevents
+package com.example.springevents.common
 
 import com.example.springevents.member.MemberEntity
 import org.springframework.stereotype.Service

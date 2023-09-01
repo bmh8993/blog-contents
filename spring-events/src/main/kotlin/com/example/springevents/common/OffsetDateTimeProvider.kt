@@ -1,4 +1,4 @@
-package com.example.springevents
+package com.example.springevents.common
 
 import org.springframework.data.auditing.DateTimeProvider
 import org.springframework.stereotype.Component

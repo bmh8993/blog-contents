@@ -1,4 +1,4 @@
-package com.example.springevents
+package com.example.springevents.test
 
 import com.example.springevents.events.async.AsyncCustomSpringEventPublisher
 import com.example.springevents.events.sync.SyncCustomSpringEventPublisher

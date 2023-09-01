@@ -1,6 +1,6 @@
 package com.example.springevents.member
 
-import com.example.springevents.EntityAuditing
+import com.example.springevents.common.EntityAuditing
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table

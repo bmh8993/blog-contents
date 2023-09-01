@@ -1,6 +1,6 @@
 package com.example.springevents.events
 
-import com.example.springevents.EmailSenderService
+import com.example.springevents.common.EmailSenderService
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionalEventListener
 

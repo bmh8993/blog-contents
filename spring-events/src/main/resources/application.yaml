@@ -19,3 +19,10 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+    cloud:
+        gcp:
+            project-id: 'project-id'
+            credentials:
+                location: 'classpath:json-path.json'
+            pubsub:
+                project-id: 'project-id'

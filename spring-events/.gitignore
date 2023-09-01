@@ -216,4 +216,10 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+# gcp credentials file
+src/main/resources/ad-dooh-test-dev-0c272884d0c5.json
+
+# application yaml
+src/main/resources/application-secret.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,intellij,java,gradle,macos
