@@ -1,4 +1,4 @@
-package com.example.springevents
+package com.example.springevents.common
 
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate

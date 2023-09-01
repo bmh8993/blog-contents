@@ -8,3 +8,5 @@ content-type: application/json
 {
   "name": "zayden"
 }
+###
+POST http://localhost:8080/test/pubsub-adapter
