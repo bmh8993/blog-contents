@@ -12,8 +12,8 @@ private val logger = mu.KotlinLogging.logger {}
 class AsyncCustomSpringEventListener {
 
     @Async
-//    @EventListener
-    @TransactionalEventListener
+    @EventListener
+//    @TransactionalEventListener
     fun consume(event: AsyncCustomSpringEvent) {
         logger.info("listen message ${event.message} // ${Thread.currentThread().name} // ${OffsetDateTime.now()}") //
     }

@@ -9,7 +9,9 @@ import jakarta.persistence.Table
 @Table(name = "tb_member")
 class MemberEntity(
     @Column(name = "name", nullable = false)
-    var name: String
+    var name: String,
+    @Column(name = "is_connected_messenger", nullable = false)
+    var isConnectedMessenger: Boolean
 ) : EntityAuditing() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -17,14 +19,19 @@ class MemberEntity(
 
         other as MemberEntity
 
-        return name == other.name
+        if (name != other.name) return false
+        return isConnectedMessenger == other.isConnectedMessenger
     }
 
     override fun hashCode(): Int {
-        return name.hashCode()
+        var result = name.hashCode()
+        result = 31 * result + isConnectedMessenger.hashCode()
+        return result
     }
 
     override fun toString(): String {
-        return "MemberEntity(name='$name')"
+        return "MemberEntity(name='$name', isConnectedMessenger=$isConnectedMessenger)"
     }
+
+
 }
