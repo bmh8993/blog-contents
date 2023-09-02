@@ -2,11 +2,28 @@ GET http://localhost:8080/test/sync
 ###
 GET http://localhost:8080/test/async
 ###
-POST http://localhost:8080/members/sign-up
+POST http://localhost:8080/members/sign-up-v1
 content-type: application/json
 
 {
-  "name": "zayden"
+  "name": "zayden",
+  "isConnectedMessenger": true
+}
+###
+POST http://localhost:8080/members/sign-up-v2
+content-type: application/json
+
+{
+  "name": "zayden",
+  "isConnectedMessenger": true
+}
+###
+POST http://localhost:8080/members/sign-up-v3
+content-type: application/json
+
+{
+  "name": "zayden",
+  "isConnectedMessenger": true
 }
 ###
 POST http://localhost:8080/test/pubsub-adapter
