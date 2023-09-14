@@ -3,13 +3,13 @@ spring:
       activate:
           on-profile: local
     datasource:
-        url: jdbc:mysql://localhost:3306/zayden?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://localhost:3306/zayden?useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8
         username: root
         password: root
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: validate
         show-sql: true
         properties:
             hibernate:
@@ -19,3 +19,10 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+    cloud:
+        gcp:
+            project-id: 'project-id'
+            credentials:
+                location: 'classpath:json-path.json'
+            pubsub:
+                project-id: 'project-id'

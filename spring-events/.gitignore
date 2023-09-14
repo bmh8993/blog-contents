@@ -68,6 +68,9 @@ atlassian-ide-plugin.xml
 # SonarLint plugin
 .idea/sonarlint/
 
+# codeStyles
+.idea/codeStyles/
+
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
@@ -212,5 +215,11 @@ gradle-app.setting
 ### Gradle Patch ###
 # Java heap dump
 *.hprof
+
+# gcp credentials file
+src/main/resources/ad-dooh-test-dev-0c272884d0c5.json
+
+# application yaml
+src/main/resources/application-secret.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,intellij,java,gradle,macos
