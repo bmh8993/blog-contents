@@ -1,9 +1,13 @@
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 56379
   config:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/zayden?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/zayden?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,3 +23,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
