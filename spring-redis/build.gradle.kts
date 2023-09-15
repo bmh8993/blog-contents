@@ -24,9 +24,6 @@ dependencies {
     // jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    // redis
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-
     // thymeleaf
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
@@ -39,6 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // storage
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.session:spring-session-data-redis")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
