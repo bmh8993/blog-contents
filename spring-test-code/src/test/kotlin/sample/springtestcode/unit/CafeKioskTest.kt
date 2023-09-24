@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import sample.springtestcode.unit.beverages.Americano
 import sample.springtestcode.unit.beverages.Latte
+import java.time.LocalDateTime
 
 class CafeKioskTest {
 
@@ -72,5 +73,63 @@ class CafeKioskTest {
 
         cafeKiosk.clearBeverages()
         assertThat(cafeKiosk.beverages).isEmpty()
+    }
+
+    /**
+     * createOrderV1은 테스트 코드를 동작시키는 시점에 따라 결과가 달라질 수 있습니다.
+     * 즉, craeteOrderV1은 테스트하기 좋은 코드가 아니다.
+     *
+     * 현재 시간은 테스트 하기 어려운 영역에 속한다.
+     */
+    @Test
+    fun createOrderV1() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        val latte = Latte()
+
+        cafeKiosk.addBeverage(americano)
+        cafeKiosk.addBeverage(latte)
+
+        val order = cafeKiosk.createOrderV1()
+
+        assertThat(order.beverages).hasSize(2)
+        assertThat(order.beverages[0]).isEqualTo(americano)
+        assertThat(order.beverages[1]).isEqualTo(latte)
+    }
+
+    /**
+     * createOrderV2는 테스트하기 좋은 코드이다.
+     * 테스트 코드를 동작시키는 시점에 따라 결과가 달라지지 않는다.
+     *
+     * 현재 시간은 제어 불가능한 영역인데, 이걸 제어 가능한 영역으로 바꿔준다.
+     */
+    @Test
+    fun createOrderV2WithCurrentDateTime() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        val latte = Latte()
+
+        cafeKiosk.addBeverage(americano)
+        cafeKiosk.addBeverage(latte)
+
+        val order = cafeKiosk.createOrderV2(LocalDateTime.of(2023, 9, 25, 10, 1))
+
+        assertThat(order.beverages).hasSize(2)
+        assertThat(order.beverages[0]).isEqualTo(americano)
+        assertThat(order.beverages[1]).isEqualTo(latte)
+    }
+
+    @Test
+    fun createOrderV2WithOutOpenTime() {
+        val cafeKiosk = CafeKiosk()
+        val americano = Americano()
+        val latte = Latte()
+
+        cafeKiosk.addBeverage(americano)
+        cafeKiosk.addBeverage(latte)
+
+        assertThatThrownBy { cafeKiosk.createOrderV2(LocalDateTime.of(2023, 9, 25, 9, 59)) }
+            .isInstanceOf(IllegalStateException::class.java)
+            .hasMessage("주문 가능 시간이 아닙니다.")
     }
 }
