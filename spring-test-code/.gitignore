@@ -11,6 +11,7 @@
 *.iws
 *.iml
 *.ipr
+mics.xml
 
 # CMake
 cmake-build-*/
@@ -324,6 +325,8 @@ hs_err_pid*
 replay_pid*
 
 ### Kotlin ###
+kotlinc.xml
+
 # Compiled class file
 
 # Log file
