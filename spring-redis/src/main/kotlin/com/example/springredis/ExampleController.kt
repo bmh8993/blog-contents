@@ -23,4 +23,11 @@ class ExampleController(
     fun getFruit(): String? {
         return redisService.getString("fruit")
     }
+
+    @GetMapping("/block-duplicate-call")
+    fun testBlockDuplicateCall() {
+        println("start")
+        redisService.blockDuplicateCall()
+        println("end")
+    }
 }
