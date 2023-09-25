@@ -5,11 +5,11 @@ spring:
       port: 56379
   config:
     activate:
-      on-profile: local
+      on-profile: test
   datasource:
     url: jdbc:mysql://localhost:3306/zayden?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true
     username: root
-    password:
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
