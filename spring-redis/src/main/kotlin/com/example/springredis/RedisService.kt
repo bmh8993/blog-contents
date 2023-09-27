@@ -7,6 +7,8 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+private val logger = mu.KotlinLogging.logger {}
+
 @Service
 class RedisService(
     private val stringRedisTemplate: StringRedisTemplate,
@@ -24,11 +26,11 @@ class RedisService(
     fun blockDuplicateCall() {
         val key = "RedisService.blockDuplicateCall:${LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))}"
 
-        println("key: $key")
+        logger.info("key: $key")
 
         val isSuccess = stringRedisTemplate.opsForValue().setIfAbsent(key, "value", Duration.ofMinutes(1))
 
-        println("isSuccess: $isSuccess")
+        logger.info("isSuccess: $isSuccess")
 
         if (isSuccess != true) {
             throw RuntimeException("Duplicate call")
@@ -37,5 +39,10 @@ class RedisService(
         Thread.sleep(5000) // 다른 작업 대신 sleep으로 대체
 
         stringRedisTemplate.unlink(key)
+    }
+
+    fun blockDuplicateCallAnnotation() {
+        logger.info("blockDuplicateCallAnnotation")
+        Thread.sleep(5000) // 다른 작업 대신 sleep으로 대체
     }
 }
