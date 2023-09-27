@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+private val logger = mu.KotlinLogging.logger {}
+
 @RestController
 @RequestMapping("/example")
 class ExampleController(
@@ -26,8 +28,16 @@ class ExampleController(
 
     @GetMapping("/block-duplicate-call")
     fun testBlockDuplicateCall() {
-        println("start")
+        logger.info("start")
         redisService.blockDuplicateCall()
-        println("end")
+        logger.info("end")
+    }
+
+    @GetMapping("/block-duplicate-call-annotation")
+    @BlockDuplicateCall
+    fun testBlockDuplicateCallAnnotation() {
+        logger.info("start")
+        redisService.blockDuplicateCallAnnotation()
+        logger.info("end")
     }
 }

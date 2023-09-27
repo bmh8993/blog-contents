@@ -43,6 +43,11 @@ dependencies {
 
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.testcontainers:testcontainers:1.19.0")
+    testImplementation("org.testcontainers:junit-jupiter")
+
+    // logger
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
 }
 
 tasks.withType<KotlinCompile> {
