@@ -27,4 +27,11 @@ class StockService(
         stock.decrease(qantity)
         stockRepository.saveAndFlush(stock)
     }
+
+    @Transactional
+    fun decreaseWithPessimisticLock(stockId: Long, qantity: Long) {
+        val stock: Stock = stockRepository.findByIdWithPessimisticLock(stockId)
+        stock.decrease(qantity)
+        stockRepository.saveAndFlush(stock)
+    }
 }
