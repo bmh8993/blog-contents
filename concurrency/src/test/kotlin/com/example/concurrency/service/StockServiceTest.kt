@@ -1,6 +1,8 @@
 package com.example.concurrency.service
 
 import com.example.concurrency.domain.Stock
+import com.example.concurrency.facade.NamedLockStockFacade
+import com.example.concurrency.facade.OptimisticLockStockFacade
 import com.example.concurrency.repository.StockRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -21,6 +23,12 @@ class StockServiceTest {
 
     @Autowired
     lateinit var stockRepository: StockRepository
+
+    @Autowired
+    lateinit var optimisticLockStockFacade: OptimisticLockStockFacade
+
+    @Autowired
+    lateinit var namedLockStockFacade: NamedLockStockFacade
 
     @BeforeEach
     fun before() {
@@ -110,10 +118,10 @@ class StockServiceTest {
     /**
      * 해결방법: Pessismistic Lock(비관적 잠금) 사용
      * ---
-     * 비관락의 작점은 충돌이 빈번하게 일어난다면 optimistic lock(낙관적 잠금)보다 성능이 좋다.
+     * 장점: 충돌이 빈번하게 일어난다면 optimistic lock(낙관적 잠금)보다 성능이 좋다.
      * 락을 걸고 업데이트 하기 때문에 데이터 정합성이 보장된다.
      *
-     * 단, 락을 잡기 때문에 성능 감소가 있을 수 있다.
+     * 단점: 락을 잡기 때문에 성능 감소가 있을 수 있다.
      */
     @Test
     fun decreaseWith100ThreadsV2() {
@@ -125,6 +133,71 @@ class StockServiceTest {
             executorService.submit {
                 try {
                     stockService.decreaseWithPessimisticLock(stockId, 1)
+                } finally {
+                    latch.countDown()
+                }
+            }
+        }
+
+        latch.await()
+
+        val stock = stockRepository.findById(stockId).orElseThrow()
+
+        // 100 - 100 = 0
+        assertThat(stock.quantity).isEqualTo(0)
+    }
+
+    /**
+     * 해결방법: Optimistic Lock(낙관적 잠금) 사용
+     * ---
+     * optimistic lock은 실패 했을 시 재시도가 필요하다. (facade 구현)
+     * ---
+     * 장점: optimistic lock은 별도의 lock을 잡지 않으므로 pessimistic lock보다 성능이 좋다.
+     * 단점: 실패 시 재시도 로직을 개발자가 직접 작성해야한다.
+     *
+     * 충돌이 빈번하다 > pessimistic lock
+     * 충돌이 드물다 > optimistic lock
+     */
+    @Test
+    fun decreaseWith100ThreadsV3() {
+        val threadCount = 100
+        val executorService = Executors.newFixedThreadPool(32)
+        val latch = CountDownLatch(threadCount)
+
+        for (i in 1..threadCount) {
+            executorService.submit {
+                try {
+                    optimisticLockStockFacade.decrease(stockId, 1)
+                } finally {
+                    latch.countDown()
+                }
+            }
+        }
+
+        latch.await()
+
+        val stock = stockRepository.findById(stockId).orElseThrow()
+
+        // 100 - 100 = 0
+        assertThat(stock.quantity).isEqualTo(0)
+    }
+
+    /**
+     * named lock
+     * ---
+     * 주의사항: named lock은 tx가 종료되더라도 lock이 자동으로 해제되지 않는다.
+     * 별도의 명령으로 해제해야 한다. 또는 특정 시간이 지나면 자동으로 해제되도록 설정할 수 있다.
+     */
+    @Test
+    fun decreaseWith100ThreadsV4() {
+        val threadCount = 100
+        val executorService = Executors.newFixedThreadPool(32)
+        val latch = CountDownLatch(threadCount)
+
+        for (i in 1..threadCount) {
+            executorService.submit {
+                try {
+                    namedLockStockFacade.decrease(stockId, 1)
                 } finally {
                     latch.countDown()
                 }

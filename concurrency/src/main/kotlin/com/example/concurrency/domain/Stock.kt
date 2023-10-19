@@ -1,9 +1,11 @@
 package com.example.concurrency.domain
 
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Version
 
 @Entity
 class Stock(
@@ -13,8 +15,12 @@ class Stock(
 
     val productId: Long,
 
-    var quantity: Long
+    var quantity: Long,
 ) {
+    @Version
+    @Column(nullable = false, columnDefinition = "bigint default 1")
+    private val version: Long = 1
+
     fun decrease(quantity: Long) {
         if (this.quantity < quantity) {
             throw RuntimeException("재고는 0개 미만이 될 수 없습니다.")
