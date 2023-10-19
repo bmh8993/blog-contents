@@ -7,6 +7,8 @@ spring:
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 40 # 최대 커넥션 개수
   jpa:
     hibernate:
       ddl-auto: update
