@@ -21,7 +21,7 @@ private val logger = KotlinLogging.logger {}
 @Configuration
 class SynchronousPullMessageSubConfig {
 
-    val subscription: String = "pulling3-topic-sub"
+    val subscription: String = "test-pulling-topic-sub"
 
     @Bean("synchronousPullMessageInputChannel")
     fun synchronousPullMessageInputChannel() = DirectChannel()

@@ -16,7 +16,7 @@ private val logger = KotlinLogging.logger {}
 
 @Configuration
 class StreamingPullMessagePubConfig {
-    val topicName: String = "streaming3-topic"
+    val topicName: String = "test-streaming-topic"
 
     @Bean
     fun streamingPullMessageOutputChannel() = DirectChannel()
