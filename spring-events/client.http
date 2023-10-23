@@ -27,3 +27,9 @@ content-type: application/json
 }
 ###
 POST http://localhost:8080/test/pubsub-adapter
+
+###
+POST http://localhost:8080/test/pubsub-unordered
+
+###
+POST http://localhost:8080/test/pubsub-ordering

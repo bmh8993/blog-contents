@@ -5,7 +5,6 @@ import com.google.cloud.spring.pubsub.integration.AckMode
 import com.google.cloud.spring.pubsub.integration.inbound.PubSubInboundChannelAdapter
 import com.google.cloud.spring.pubsub.support.BasicAcknowledgeablePubsubMessage
 import com.google.cloud.spring.pubsub.support.GcpPubSubHeaders
-import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,21 +12,20 @@ import org.springframework.integration.annotation.ServiceActivator
 import org.springframework.integration.channel.DirectChannel
 import org.springframework.messaging.MessageChannel
 import org.springframework.messaging.handler.annotation.Header
-import org.springframework.stereotype.Service
 
 private val logger = mu.KotlinLogging.logger {}
 
 @Configuration
-class StreamingPullMessageSubConfig {
-    
-    val subscription: String = "test-streaming-topic-sub"
+class OrderingMessageSubConfig {
 
-    @Bean("streamingPullMessageInputChannel")
-    fun streamingPullMessageInputChannel() = DirectChannel()
+    val subscription: String = "test-ordering-topic-sub"
+
+    @Bean("orderingMessageInputChannel")
+    fun orderingMessageInputChannel() = DirectChannel()
 
     @Bean
-    fun streamingPullMessageInboundChannelAdapter(
-        @Qualifier("streamingPullMessageInputChannel") inputChannel: MessageChannel,
+    fun orderingMessageInboundChannelAdapter(
+        @Qualifier("orderingMessageInputChannel") inputChannel: MessageChannel,
         pubSubTemplate: PubSubTemplate
     ): PubSubInboundChannelAdapter {
 
@@ -38,15 +36,17 @@ class StreamingPullMessageSubConfig {
         return adapter
     }
 
-    @ServiceActivator(inputChannel = "streamingPullMessageInputChannel")
+    @ServiceActivator(inputChannel = "orderingMessageInputChannel")
     fun messageReceiver(
         payload: String,
         @Header(GcpPubSubHeaders.ORIGINAL_MESSAGE) message: BasicAcknowledgeablePubsubMessage
     ) {
-        logger.info("StreamingPullMessage: $payload")
+        val orderingKey = message.pubsubMessage.orderingKey
+
+        logger.info("OrderingMessage: $payload, orderingKey: $orderingKey")
 
         try {
-            logger.info { "Consuming message: $payload" }
+//            logger.info { "Consuming message: $payload" }
             message.ack()
         } catch (ex: Exception) {
             logger.error { ex.stackTraceToString() }
