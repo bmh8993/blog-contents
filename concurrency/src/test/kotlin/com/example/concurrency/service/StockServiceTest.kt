@@ -1,6 +1,7 @@
 package com.example.concurrency.service
 
 import com.example.concurrency.domain.Stock
+import com.example.concurrency.facade.LettuceLockStockFacade
 import com.example.concurrency.facade.NamedLockStockFacade
 import com.example.concurrency.facade.OptimisticLockStockFacade
 import com.example.concurrency.repository.StockRepository
@@ -10,10 +11,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 
 @SpringBootTest
+@Testcontainers
+//@ActiveProfiles("test")
 class StockServiceTest {
 
     var stockId = 0L
@@ -29,6 +34,9 @@ class StockServiceTest {
 
     @Autowired
     lateinit var namedLockStockFacade: NamedLockStockFacade
+
+    @Autowired
+    lateinit var lettuceLockStockFacade: LettuceLockStockFacade
 
     @BeforeEach
     fun before() {
@@ -198,6 +206,30 @@ class StockServiceTest {
             executorService.submit {
                 try {
                     namedLockStockFacade.decrease(stockId, 1)
+                } finally {
+                    latch.countDown()
+                }
+            }
+        }
+
+        latch.await()
+
+        val stock = stockRepository.findById(stockId).orElseThrow()
+
+        // 100 - 100 = 0
+        assertThat(stock.quantity).isEqualTo(0)
+    }
+
+    @Test
+    fun decreaseWith100ThreadsV5() {
+        val threadCount = 100
+        val executorService = Executors.newFixedThreadPool(32)
+        val latch = CountDownLatch(threadCount)
+
+        for (i in 1..threadCount) {
+            executorService.submit {
+                try {
+                    lettuceLockStockFacade.decrease(stockId, 1)
                 } finally {
                     latch.countDown()
                 }
