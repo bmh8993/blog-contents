@@ -1,18 +1,55 @@
 spring:
-  config:
-    activate:
-      on-profile: local
-#  h2:
+  profiles:
+    default: local # 프로파일이 지정되지 않으면 기본 프로파일은 default(local)을 따른다.
+
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/cafekiosk
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true # (2.5~) hibernate 초기화 이후 data.sql 실행
+
+  h2:
+    console:
+      enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  jpa:
+    hibernate:
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
+
+  sql:
+    init:
+      mode: never
