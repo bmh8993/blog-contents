@@ -15,8 +15,8 @@ import java.time.LocalDateTime
 abstract class BaseEntity(
 
     @CreatedDate
-    private val createdDateTime: LocalDateTime = LocalDateTime.now(),
+    var createdDateTime: LocalDateTime = LocalDateTime.now(),
 
     @LastModifiedDate
-    private val updatedDateTime: LocalDateTime = LocalDateTime.now()
+    var updatedDateTime: LocalDateTime = LocalDateTime.now()
 )
