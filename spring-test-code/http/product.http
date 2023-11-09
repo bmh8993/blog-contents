@@ -1,0 +1,2 @@
+### 판매중인 상품 목록
+GET localhost:8080/api/v1/products/selling
