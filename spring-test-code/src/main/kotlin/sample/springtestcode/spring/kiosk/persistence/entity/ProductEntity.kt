@@ -18,7 +18,7 @@ import sample.springtestcode.spring.kiosk.persistence.code.ProductType
 // NoArgsConstructor
 // RequiredArgsConstructor
 // @Column
-@Table(name = "product")
+@Table(name = "tb_product")
 @Entity
 class ProductEntity(
 
@@ -26,15 +26,15 @@ class ProductEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    var productNumber: String,
+    val productNumber: String,
 
     @Enumerated(EnumType.STRING)
-    var type: ProductType,
+    val type: ProductType,
 
     @Enumerated(EnumType.STRING)
-    var sellingStatus: ProductSellingStatus,
+    val sellingStatus: ProductSellingStatus,
 
-    var name: String,
+    val name: String,
 
-    var price: Int,
+    val price: Int,
 ) : BaseEntity()

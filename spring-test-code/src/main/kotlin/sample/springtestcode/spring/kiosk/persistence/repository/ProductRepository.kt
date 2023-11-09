@@ -8,4 +8,5 @@ import sample.springtestcode.spring.kiosk.persistence.entity.ProductEntity
 @Repository
 interface ProductRepository : JpaRepository<ProductEntity, Long> {
     fun findAllBySellingStatusIn(sellingStatuses: List<ProductSellingStatus>): List<ProductEntity>
+    fun findAllByProductNumberIn(productNumbers: List<String>): List<ProductEntity>
 }
