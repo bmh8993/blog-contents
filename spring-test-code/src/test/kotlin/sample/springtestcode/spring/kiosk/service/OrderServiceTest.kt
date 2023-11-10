@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import sample.springtestcode.spring.kiosk.api.resreq.OrderCreateRequest
+import sample.springtestcode.spring.kiosk.api.request.OrderCreateRequest
 import sample.springtestcode.spring.kiosk.persistence.code.ProductSellingStatus
 import sample.springtestcode.spring.kiosk.persistence.code.ProductType
 import sample.springtestcode.spring.kiosk.persistence.entity.ProductEntity

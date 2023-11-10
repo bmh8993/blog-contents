@@ -2,8 +2,8 @@ package sample.springtestcode.spring.kiosk.service
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import sample.springtestcode.spring.kiosk.api.resreq.OrderCreateRequest
-import sample.springtestcode.spring.kiosk.api.resreq.OrderResponse
+import sample.springtestcode.spring.kiosk.api.request.OrderCreateRequest
+import sample.springtestcode.spring.kiosk.api.response.OrderResponse
 import sample.springtestcode.spring.kiosk.persistence.entity.OrderEntity
 import sample.springtestcode.spring.kiosk.persistence.entity.OrderProductEntity
 import sample.springtestcode.spring.kiosk.persistence.entity.ProductEntity
@@ -14,6 +14,7 @@ import sample.springtestcode.spring.kiosk.persistence.repository.ProductReposito
 import sample.springtestcode.spring.kiosk.persistence.repository.StockRepository
 import java.time.LocalDateTime
 
+@Transactional(readOnly = true)
 @Service
 class OrderService(
     private val productRepository: ProductRepository,

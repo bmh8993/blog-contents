@@ -1,4 +1,4 @@
-package sample.springtestcode.spring.kiosk.api.resreq
+package sample.springtestcode.spring.kiosk.api.response
 
 import sample.springtestcode.spring.kiosk.persistence.entity.OrderEntity
 import sample.springtestcode.spring.kiosk.persistence.entity.ProductEntity
