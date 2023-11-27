@@ -1,6 +1,7 @@
 package com.example.springredis
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -12,6 +13,7 @@ private val logger = mu.KotlinLogging.logger {}
 @RequestMapping("/example")
 class ExampleController(
     private val redisService: RedisService,
+    private val userService: UserService,
 ) {
 
     @PostMapping("/fruit")
@@ -39,5 +41,12 @@ class ExampleController(
         logger.info("start")
         redisService.blockDuplicateCallAnnotation()
         logger.info("end")
+    }
+
+    @GetMapping("users/{userId}/profile")
+    fun getUserProfile(
+        @PathVariable("userId") userId: String,
+    ): UserProfile {
+        return userService.getUserProfile(userId)
     }
 }
