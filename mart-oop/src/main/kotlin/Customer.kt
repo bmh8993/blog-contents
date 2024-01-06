@@ -1,18 +1,22 @@
+
+import java.util.UUID
+
 class Customer(
-    val name: String,
+    private val name: String,
 ) {
+    private val customerId = "$name-${UUID.randomUUID()}"
     private val card = Card()
-    private val cart = mutableListOf<Pair<Product, Int>>()
+    private val cart = mutableListOf<CartItem>()
 
-    fun addToCart(product: Product, quantity: Int) {
-        cart.add(product to quantity)
+    fun addToCart(cartItem: CartItem) {
+        cart.add(cartItem)
     }
 
-    fun requestCheckout(martOwner: MartOwner): Payment {
-        return martOwner.createPayment(cart)
+    fun requestCheckout(martOwner: MartOwner) {
+        return martOwner.createPayment(customerId, cart)
     }
 
-    fun pay(martOwner: MartOwner, payment: Payment) {
-        martOwner.processPayment(card, payment)
+    fun pay(martOwner: MartOwner) {
+        martOwner.processPayment(customerId, card)
     }
 }
