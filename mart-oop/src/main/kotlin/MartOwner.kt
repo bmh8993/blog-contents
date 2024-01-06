@@ -1,12 +1,25 @@
 class MartOwner {
-    fun createPayment(cart: List<Pair<Product, Int>>): Payment {
+
+    private val paymentBox = mutableListOf<Payment>()
+
+    fun createPayment(customerId: String, cart: List<CartItem>) {
         val totalPrice: Int = cart
-            .map { (product, int) -> product.price * int }
+            .map { cartItem -> cartItem.getTotalPrice() }
             .reduce { acc, price -> acc + price }
-        return Payment(cart, totalPrice)
+
+        val payment = Payment(customerId, cart, totalPrice)
+        paymentBox.add(payment)
     }
 
-    fun processPayment(card: Card, payment: Payment) {
-        card.checkout(payment)
+    fun processPayment(customerId: String, card: Card) {
+        findNotPaidPaymentBy(customerId)?.let { payment ->
+            card.checkout(payment)
+        } ?: throw IllegalStateException("계산할 내역이 없습니다.")
+    }
+
+    private fun findNotPaidPaymentBy(customerId: String): Payment? {
+        return paymentBox.firstOrNull { payment ->
+            payment.isPaid() && payment.isSameCustomer(customerId)
+        }
     }
 }

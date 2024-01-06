@@ -26,12 +26,12 @@ class Mart {
             val coffee = Product("커피", 1000, LocalDate.now().plusDays(17))
             val energyDrink = Product("에너지드링크", 2000, LocalDate.now().plusDays(18))
 
-            customer.addToCart(cola, 2)
-            customer.addToCart(ramen, 1)
+            customer.addToCart(CartItem(cola, 2))
+            customer.addToCart(CartItem(ramen, 1))
 
             val payment = customer.requestCheckout(martOwner)
 
-            customer.pay(martOwner, payment)
+            customer.pay(martOwner)
         }
     }
 }
