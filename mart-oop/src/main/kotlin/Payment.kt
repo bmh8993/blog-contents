@@ -1,12 +1,12 @@
 import java.time.LocalDateTime
 
 class Payment private constructor(
-    val customerId: String,
-    val purchaseInfo: List<Pair<Product, Int>>,
-    val totalPrice: Int,
+    private val customerId: String,
+    private val purchaseInfo: List<Pair<Product, Int>>,
+    private val totalPrice: Int,
     private var paidAt: LocalDateTime?,
 ) {
-    val paymentId: String = "payment-${LocalDateTime.now()}"
+    private val paymentId: String = "payment-${LocalDateTime.now()}"
 
     constructor(
         customerId: String,

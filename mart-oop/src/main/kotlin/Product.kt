@@ -1,7 +1,7 @@
 import java.time.LocalDate
 
 class Product(
-    val name: String,
+    private val name: String,
     val price: Int,
-    val expireDate: LocalDate
+    private val expireDate: LocalDate
 )
