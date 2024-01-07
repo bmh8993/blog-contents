@@ -3,6 +3,6 @@ class CartItem(
     private val quantity: Int,
 ) {
     fun getTotalPrice(): Int {
-        return product.price * quantity
+        return product.calculatePrice(quantity)
     }
 }
