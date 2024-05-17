@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class WebServerCustomizer: WebServerFactoryCustomizer<ConfigurableWebServerFactory>{
     override fun customize(factory: ConfigurableWebServerFactory) {
-        val errorPage404 = ErrorPage(HttpStatus.NOT_FOUND, "error-page/404")
-        val errorPage500 = ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "error-page/500")
+        val errorPage404 = ErrorPage(HttpStatus.NOT_FOUND, "/error-page/404")
+        val errorPage500 = ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error-page/500")
 
         val errorPageRuntimeEx = ErrorPage(RuntimeException::class.java, "/error-page/500")
 
