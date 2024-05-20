@@ -1,11 +1,13 @@
 package org.hello.springexception
 
 import jakarta.servlet.DispatcherType
+import org.hello.springexception.resolver.MyHandlerExceptionResolver
 import org.hello.springexception.filter.LogFilter
 import org.hello.springexception.interceptor.LogInterceptor
+import org.hello.springexception.resolver.UserHandlerExceptionResolver
 import org.springframework.boot.web.servlet.FilterRegistrationBean
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.HandlerExceptionResolver
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
@@ -18,6 +20,11 @@ class WebConfig: WebMvcConfigurer {
             .order(1)
             .addPathPatterns("/**")
             .excludePathPatterns("/css/**", "*.ico", "/error/**", "/error-page/**") // css, ico, error는 로깅에서 제외
+    }
+
+    override fun extendHandlerExceptionResolvers(resolvers: MutableList<HandlerExceptionResolver>) {
+        resolvers.add(MyHandlerExceptionResolver())
+        resolvers.add(UserHandlerExceptionResolver())
     }
 
 //    @Bean
