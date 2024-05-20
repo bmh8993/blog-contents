@@ -1,10 +1,15 @@
 package org.hello.springexception.servlet
 
+import jakarta.servlet.RequestDispatcher
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
+
 
 @Controller
 class ErrorPageController {
@@ -30,6 +35,21 @@ class ErrorPageController {
         logger.info("errorPage500")
         printErrorInfo(request)
         return "error-page/500"
+    }
+
+    @RequestMapping(value = ["/error-page/500"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun errorPage500Api(
+        request: HttpServletRequest,
+        response: HttpServletResponse?
+    ): ResponseEntity<Map<String, Any?>> {
+        logger.info("API errorPage 500")
+        val result: MutableMap<String, Any?> = HashMap()
+        val ex = request.getAttribute(ERROR_EXCEPTION) as Exception
+        result["status"] = request.getAttribute(ERROR_STATUS_CODE)
+        result["message"] = ex.message
+        val statusCode = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE) as Int
+
+        return ResponseEntity<Map<String, Any?>>(result, HttpStatus.valueOf(statusCode))
     }
 
     private fun printErrorInfo(request: HttpServletRequest) {
