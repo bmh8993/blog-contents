@@ -2,15 +2,25 @@ package org.hello.springexception
 
 import jakarta.servlet.DispatcherType
 import org.hello.springexception.filter.LogFilter
+import org.hello.springexception.interceptor.LogInterceptor
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 class WebConfig: WebMvcConfigurer {
 
-    @Bean
+    override fun addInterceptors(registry: InterceptorRegistry) {
+        // interceptor는 dispatcherType이 REQUEST일 때만 동작한다.
+        registry.addInterceptor(LogInterceptor())
+            .order(1)
+            .addPathPatterns("/**")
+            .excludePathPatterns("/css/**", "*.ico", "/error/**", "/error-page/**") // css, ico, error는 로깅에서 제외
+    }
+
+//    @Bean
     fun logFilter(): FilterRegistrationBean<LogFilter> {
         val filterRegistrationBean = FilterRegistrationBean<LogFilter>()
         filterRegistrationBean.filter = LogFilter()
